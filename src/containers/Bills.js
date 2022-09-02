@@ -33,8 +33,10 @@ export default class {
       .bills()
       .list()
       .then(snapshot => {
-        const bills = snapshot
-          .map(doc => {
+        console.log(snapshot);
+        const antiChrono = (a, b) => (new Date(b.date) - new Date(a.date))
+        const bills = snapshot.sort(antiChrono)
+        .map(doc => {
             try {
               return {
                 ...doc,
