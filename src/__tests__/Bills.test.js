@@ -29,11 +29,29 @@ describe("Given I am connected as an employee", () => {
       expect(windowIcon).toBeDefined()
 
     })
+    // add test
+    test("Then bill icon in vertical layout should be highlighted", async () => {
+
+      Object.defineProperty(window, 'localStorage', { value: localStorageMock })
+      window.localStorage.setItem('user', JSON.stringify({
+        type: 'Employee'
+      }))
+      const root = document.createElement("div")
+      root.setAttribute("id", "root")
+      document.body.append(root)
+      router()
+      window.onNavigate(ROUTES_PATH.Bills)
+      await waitFor(() => screen.getByTestId('icon-mail'))
+      const MailIcon = screen.getByTestId('icon-mail')
+      //to-do write expect expression
+      expect(MailIcon).toBeDefined()
+
+    })
     test("Then bills should be ordered from earliest to latest", () => {
       document.body.innerHTML = BillsUI({ data: bills })
       const dates = screen.getAllByText(/^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/i).map(a => a.innerHTML)
-      // const antiChrono = (a, b) => ((a.date < b.date) ? 1 : -1)
-      const antiChrono = (a, b) => (new Date(b.date) - new Date(a.date))
+      const antiChrono = (a, b) => ((a.date < b.date) ? -1 : 1)
+      // const antiChrono = (a, b) => (new Date(b.date) - new Date(a.date))
       const datesSorted = [...dates].sort(antiChrono)
       expect(dates).toEqual(datesSorted)
     })
