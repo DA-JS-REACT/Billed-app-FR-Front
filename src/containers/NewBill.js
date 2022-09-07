@@ -18,11 +18,8 @@ export default class NewBill {
   handleChangeFile = e => {
     e.preventDefault()
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
-    console.log('file',file);
     const filePath = e.target.value.split(/\\/g)
-    console.log('filePath',filePath);
     const fileName = filePath[filePath.length-1]
-    console.log('fileName',fileName);
     const formData = new FormData()
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)
