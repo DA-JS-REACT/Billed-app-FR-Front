@@ -22,6 +22,7 @@ export default class {
 
   handleClickIconEye = (icon) => {
     const billUrl = icon.getAttribute("data-bill-url")
+    console.log(billUrl);
     const imgWidth = Math.floor($('#modaleFile').width() * 0.5)
     $('#modaleFile').find(".modal-body").html(`<div style='text-align: center;' class="bill-proof-container"><img width=${imgWidth} src=${billUrl} alt="Bill" /></div>`)
     $('#modaleFile').modal('show')
@@ -33,7 +34,6 @@ export default class {
       .bills()
       .list()
       .then(snapshot => {
-        console.log(snapshot);
         const antiChrono = (a, b) => (new Date(b.date) - new Date(a.date))
         const bills = snapshot.sort(antiChrono)
         .map(doc => {

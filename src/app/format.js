@@ -17,3 +17,23 @@ export const formatStatus = (status) => {
       return "Refused"
   }
 }
+
+export const formatFile = (filePath,fileNameWithExt) => {
+
+  const formatFile = ['jpg','jpeg','png','gif']
+  const extension =  fileNameWithExt.split('.')
+  const fileNameExt = extension[extension.length-1]
+  let fileName = '';
+  const div = document.querySelector('#fileExt');
+  if(formatFile.find(ext => ext === fileNameExt )){
+    fileName = filePath[filePath.length-1]
+    $('.formatError').remove()
+    div.style.color = 'black'
+  }else {
+    fileName = 'nope'
+    $('#fileExt').append(`<small class="formatError" style="color: red">format attendu .jpeg,.jpg, .png, .gif</small>`)
+    div.style.color = 'red'
+    throw new Error("le format n'est pas conforme")
+  }
+    return fileName;
+}

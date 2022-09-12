@@ -53,9 +53,9 @@ export default () => {
                     <label for="commentary" class="bold-label">Commentaire</label>
                     <textarea class="form-control blue-border" data-testid="commentary" rows="3"></textarea>
                   </div>
-                  <div class="col-half">
+                  <div id="fileExt" class="col-half">
                     <label for="file" class="bold-label">Justificatif</label>
-                    <input required type="file" class="form-control blue-border" data-testid="file" accept="image/png, image/jpeg", image/jpg "/>
+                    <input required type="file"  class="form-control blue-border" data-testid="file" accept="image/png, image/jpeg, image/jpg"/>
                   </div>
                 </div>
             </div>
