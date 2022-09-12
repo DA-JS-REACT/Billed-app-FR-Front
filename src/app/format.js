@@ -31,7 +31,7 @@ export const formatFile = (filePath,fileNameWithExt) => {
     div.style.color = 'black'
   }else {
     fileName = 'nope'
-    $('#fileExt').append(`<small class="formatError" style="color: red">format attendu .jpeg,.jpg, .png, .gif</small>`)
+    $('#fileExt').append(`<small data-testid="file-error" class="formatError" style="color: red">format attendu .jpeg,.jpg, .png, .gif</small>`)
     div.style.color = 'red'
     throw new Error("le format n'est pas conforme")
   }
