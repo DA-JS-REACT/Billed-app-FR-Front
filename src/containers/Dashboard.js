@@ -86,7 +86,7 @@ export default class {
   }
 
   handleEditTicket(e, bill, bills) {
-
+    console.log(this.counter);
     if (this.counter === undefined || this.id !== bill.id) this.counter = 0
     if (this.id === undefined || this.id !== bill.id) this.id = bill.id
     if (this.counter % 2 === 0) {
@@ -106,7 +106,7 @@ export default class {
         <div id="big-billed-icon" data-testid="big-billed-icon"> ${BigBilledIcon} </div>
       `)
       $('.vertical-navbar').css({ height: '120vh' })
-      this.counter = 0
+      this.counter ++
     }
     
     $('#icon-eye-d').click(this.handleClickIconEye)

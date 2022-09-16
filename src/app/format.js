@@ -18,22 +18,35 @@ export const formatStatus = (status) => {
   }
 }
 
-export const formatFile = (filePath,fileNameWithExt) => {
+// const errorExtension = (message) => {
+//   const error = new Error(message)
+//   return error
+// }
+function errorExtension(message) {
+  const error = new Error(message)
+  return error
+}
 
+
+export const formatFile = (fileNameWithExt) => {
+  console.log(fileNameWithExt);
   const formatFile = ['jpg','jpeg','png','gif']
   const extension =  fileNameWithExt.split('.')
   const fileNameExt = extension[extension.length-1]
   let fileName = '';
   const div = document.querySelector('#fileExt');
-  if(formatFile.find(ext => ext === fileNameExt )){
-    fileName = filePath[filePath.length-1]
+  const result = formatFile.filter(ext => ext === fileNameExt)
+
+  if(result[0] === fileNameExt ){
+    fileName = fileNameWithExt
     $('.formatError').remove()
     div.style.color = 'black'
   }else {
     fileName = 'nope'
     $('#fileExt').append(`<small data-testid="file-error" class="formatError" style="color: red">format attendu .jpeg,.jpg, .png, .gif</small>`)
     div.style.color = 'red'
-    throw new Error("le format n'est pas conforme")
+    throw new errorExtension("le format n'est pas conforme")
+
   }
     return fileName;
 }
