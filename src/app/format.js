@@ -28,17 +28,17 @@ function errorExtension(message) {
 }
 
 
-export const formatFile = (fileNameWithExt) => {
-  console.log(fileNameWithExt);
-  const formatFile = ['jpg','jpeg','png','gif']
-  const extension =  fileNameWithExt.split('.')
-  const fileNameExt = extension[extension.length-1]
+export const formatFile = (file) => {
+  const formatFile = ['image/jpg','image/jpeg','image/png','image/gif']
+  // const extension =  fileNameWithExt.split('.')
+  // const fileNameExt = extension[extension.length-1]
   let fileName = '';
   const div = document.querySelector('#fileExt');
-  const result = formatFile.filter(ext => ext === fileNameExt)
+  const result = formatFile.filter(ext => ext === file.type)
+  console.log(result);
 
-  if(result[0] === fileNameExt ){
-    fileName = fileNameWithExt
+  if(result[0] === file.type){
+    fileName = file.name
     $('.formatError').remove()
     div.style.color = 'black'
   }else {

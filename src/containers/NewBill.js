@@ -19,13 +19,11 @@ export default class NewBill {
   handleChangeFile = e => {
     e.preventDefault()
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
-    console.log('handle',file);
-    const filePath = e.target.value.split(/\\/g)
-    console.log(filePath);
-    const fileNameWithExt = filePath[filePath.length-1]
+    // const filePath = e.target.value.split(/\\/g)
+    // const fileNameWithExt = filePath[filePath.length-1]
     // const fileName = filePath[filePath.length-1]
     // check format file
-    const fileName = formatFile(fileNameWithExt);
+    const fileName = formatFile(file);
     const formData = new FormData()
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)
@@ -44,12 +42,10 @@ export default class NewBill {
         this.billId = key
         this.fileUrl = fileUrl
         this.fileName = fileName
-        console.log(this.fileName);
       }).catch(error => console.error(error))
   }
   handleSubmit = e => {
     e.preventDefault()
-    console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
     const email = JSON.parse(localStorage.getItem("user")).email
     const bill = {
       email,
@@ -64,6 +60,7 @@ export default class NewBill {
       fileName: this.fileName,
       status: 'pending'
     }
+    console.log(e.target.querySelector(`input[data-testid="datepicker"]`).value);
     this.updateBill(bill)
     this.onNavigate(ROUTES_PATH['Bills'])
   }
