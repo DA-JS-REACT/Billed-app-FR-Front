@@ -38,6 +38,8 @@ describe("Given I am connected as an employee", () => {
       const file = new File(['hello'], fileName, { type: 'image/png', lastModified: new Date(Date.now()),size :12 })
       const test  =  formatFile(file)
       expect(fileName).toStrictEqual(test)
+      const fieldUpload = screen.getByTestId('upload-file')
+      expect(fieldUpload).not.toContainHTML('<small data-testid="file-error"</small>')
 
     })
     test("the file has not correctely extension ", () => {
@@ -47,6 +49,9 @@ describe("Given I am connected as an employee", () => {
       const file = new File(['hello'], fileName, { type: 'image/pong', lastModified: new Date(Date.now()),size :12 })
       const error  = () => formatFile(file)
       expect(error).toThrowError(new Error("le format n'est pas conforme"))
+      const fieldUpload = screen.getByTestId('upload-file')
+      const errorFile = screen.getByTestId('file-error')
+      expect(fieldUpload).toContainElement(errorFile)
 
     })
     test("the file has  uploaded ",  () => {
@@ -72,7 +77,6 @@ describe("Given I am connected as an employee", () => {
       const file = new File(['hello'], fileName, { type: 'image/png', lastModified: new Date(Date.now()),size :12 })
       inputFile.addEventListener('change',handleChangeFile)
       userEvent.upload(inputFile , file)
-      console.log(inputFile.files[0].name);
       expect(handleChangeFile).toHaveBeenCalled()
       expect(inputFile.files[0]).toStrictEqual(file)
       expect(inputFile.files).toHaveLength(1)
@@ -126,6 +130,7 @@ describe("Given I am connected as an employee", () => {
         pct : '10',
         file : file
       }
+      // type any field requiered
       const inputNameExpense = screen.getByTestId('expense-name')
       userEvent.type(inputNameExpense, formData.name)
       expect(inputNameExpense).toHaveValue(formData.name)
@@ -157,8 +162,15 @@ describe("Given I am connected as an employee", () => {
       // cible form new Bill not button
       const form =  screen.getByTestId("form-new-bill")
       form.addEventListener('submit',handleSubmit)
-      fireEvent.submit(buttonSubmit)
+      fireEvent.submit(form)
       expect(handleSubmit).toHaveBeenCalled()
+
+      const root = document.createElement("div")
+      root.setAttribute("id", "root")
+      document.body.append(root)
+      router()
+      const message = screen.getByText("Mes notes de frais")
+      expect(message).toBeTruthy()
 
     })
   })

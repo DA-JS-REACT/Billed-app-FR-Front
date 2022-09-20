@@ -35,7 +35,6 @@ export const formatFile = (file) => {
   let fileName = '';
   const div = document.querySelector('#fileExt');
   const result = formatFile.filter(ext => ext === file.type)
-  console.log(result);
 
   if(result[0] === file.type){
     fileName = file.name
