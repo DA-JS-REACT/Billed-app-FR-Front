@@ -97,12 +97,51 @@ describe("Given I am connected as an employee", () => {
       document.body.innerHTML = html
 
       const testNewBill = new NewBill({
-        document , onNavigate, store : null, localStorage:window.localStorage
+        document , onNavigate, store : mockStore, localStorage:window.localStorage
       })
-      const  handleSubmit = jest.fn(() => testNewBill.handleSubmit())
-      const buttonSubmit =  screen.getByRole('button')
-      userEvent.click(buttonSubmit)
-      expect(handleSubmit).not.toHaveBeenCalled()
+     
+
+      const inputNameExpense = screen.getByTestId('expense-name')
+      expect(inputNameExpense.value).toBe('')
+      expect(inputNameExpense).not.toBeRequired()
+
+      const inputTypeExpense = screen.getByTestId('expense-type')
+      // default value for select : Transports
+      expect(inputTypeExpense.value).toBe('Transports')
+      expect(inputTypeExpense).toBeRequired()
+
+      const inputDate = screen.getByTestId('datepicker')
+      expect(inputDate.value).toBe('')
+      expect(inputDate).not.toBeValid()
+
+      const inputAmount = screen.getByTestId('amount')
+      expect(inputAmount.value).toBe('')
+      expect(inputAmount).toBeRequired()
+
+      const inputVat = screen.getByTestId('vat')
+      expect(inputVat.value).toBe('')
+      expect(inputVat).not.toBeRequired()
+
+      const inputPct = screen.getByTestId('pct')
+      expect(inputPct.value).toBe('')
+      expect(inputPct).toBeRequired()
+
+      const inputCommentary = screen.getByTestId('commentary')
+      expect(inputCommentary.value).toBe('')
+      expect(inputCommentary).not.toBeRequired()
+
+      const inputFile = screen.getByTestId('file')
+      expect(inputFile.value).toBe('')
+      expect(inputFile).toBeRequired()
+
+      // sibling form and simulate submit 
+      const form =  screen.getByTestId("form-new-bill")
+      const  handleSubmit = jest.fn((e) => testNewBill.handleSubmit(e))
+      form.addEventListener('submit',handleSubmit)
+      fireEvent.submit(form)
+      expect(handleSubmit).toHaveBeenCalled()
+      expect(form).toBeTruthy()
+
 
     })
     test("Then ,  submit form and complete data  ", () => {
@@ -128,6 +167,7 @@ describe("Given I am connected as an employee", () => {
         amount :  '250',
         vat : '20',
         pct : '10',
+        commentary : ' commentary',
         file : file
       }
       // type any field requiered
@@ -155,6 +195,10 @@ describe("Given I am connected as an employee", () => {
       userEvent.type(inputPct, formData.pct)
       expect(inputPct.value).toBe(formData.pct)
 
+      const inputCommentary = screen.getByTestId('commentary')
+      userEvent.type(inputCommentary, formData.commentary)
+      expect(inputCommentary.value).toBe(formData.commentary)
+
       const inputFile = screen.getByTestId('file')
       userEvent.upload(inputFile , formData.file)
 
@@ -165,6 +209,7 @@ describe("Given I am connected as an employee", () => {
       fireEvent.submit(form)
       expect(handleSubmit).toHaveBeenCalled()
 
+      // redirect on bill page 
       const root = document.createElement("div")
       root.setAttribute("id", "root")
       document.body.append(root)
