@@ -6,9 +6,9 @@ import {fireEvent, screen } from "@testing-library/dom"
 import userEvent from '@testing-library/user-event'
 import NewBillUI from "../views/NewBillUI.js"
 import NewBill from "../containers/NewBill.js"
-import {formatFile,formatDate} from "../app/format.js"
+import {formatFile} from "../app/format.js"
 import router from "../app/Router.js";
-import {ROUTES, ROUTES_PATH} from "../constants/routes.js";
+import {ROUTES} from "../constants/routes.js";
 import {localStorageMock} from "../__mocks__/localStorage.js";
 import mockStore from "../__mocks__/store.js"
 
@@ -68,11 +68,9 @@ describe("Given I am connected as an employee", () => {
       const testNewBill = new NewBill({
         document , onNavigate, store : mockStore, localStorage:window.localStorage
       })
-      // const  handleChangeFile = jest.fn(testNewBill.handleChangeFile)
+
       const handleChangeFile = jest.fn((e) => testNewBill.handleChangeFile(e))
-
       const inputFile =  screen.getByTestId("file")
-
       const fileName = 'hello.png'
       const file = new File(['hello'], fileName, { type: 'image/png', lastModified: new Date(Date.now()),size :12 })
       inputFile.addEventListener('change',handleChangeFile)
@@ -99,7 +97,6 @@ describe("Given I am connected as an employee", () => {
       const testNewBill = new NewBill({
         document , onNavigate, store : mockStore, localStorage:window.localStorage
       })
-     
 
       const inputNameExpense = screen.getByTestId('expense-name')
       expect(inputNameExpense.value).toBe('')
@@ -134,7 +131,7 @@ describe("Given I am connected as an employee", () => {
       expect(inputFile.value).toBe('')
       expect(inputFile).toBeRequired()
 
-      // sibling form and simulate submit 
+      // sibling form and simulate submit
       const form =  screen.getByTestId("form-new-bill")
       const  handleSubmit = jest.fn((e) => testNewBill.handleSubmit(e))
       form.addEventListener('submit',handleSubmit)
@@ -209,7 +206,7 @@ describe("Given I am connected as an employee", () => {
       fireEvent.submit(form)
       expect(handleSubmit).toHaveBeenCalled()
 
-      // redirect on bill page 
+      // redirect on bill page
       const root = document.createElement("div")
       root.setAttribute("id", "root")
       document.body.append(root)

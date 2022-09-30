@@ -18,10 +18,7 @@ export const formatStatus = (status) => {
   }
 }
 
-// const errorExtension = (message) => {
-//   const error = new Error(message)
-//   return error
-// }
+
 function errorExtension(message) {
   const error = new Error(message)
   return error
@@ -34,9 +31,9 @@ export const formatFile = (file) => {
   // const fileNameExt = extension[extension.length-1]
   let fileName = '';
   const div = document.querySelector('#fileExt');
-  const result = formatFile.filter(ext => ext === file.type)
+  const result = formatFile.includes(file.type)
 
-  if(result[0] === file.type){
+  if(result){
     fileName = file.name
     $('.formatError').remove()
     div.style.color = 'black'

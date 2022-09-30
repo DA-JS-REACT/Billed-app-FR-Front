@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 import '@testing-library/jest-dom'
-import {fireEvent,screen, waitFor} from "@testing-library/dom"
+import {screen, waitFor} from "@testing-library/dom"
 import userEvent from '@testing-library/user-event'
 import BillsUI from "../views/BillsUI.js"
 import { bills } from "../fixtures/bills.js"
@@ -68,10 +68,9 @@ describe("Given I am connected as an employee", () => {
         await waitFor(() => screen.getByTestId('btn-new-bill'))
         const buttonNewBill = screen.getByTestId('btn-new-bill')
         expect(buttonNewBill).toHaveAttribute('type', 'button')
-  
+
       })
       test("Then , employee click on button add new Bill", async () => {
-     
         const onNavigate = (pathname) => {
           document.body.innerHTML = ROUTES({ pathname })
         }
@@ -157,7 +156,7 @@ describe("Given I am connected as an employee", () => {
         router()
       })
       test("fetches bills from an API and fails with 404 message error", async () => {
-  
+
         mockStore.bills.mockImplementationOnce(() => {
           return {
             list : () =>  {
@@ -170,23 +169,23 @@ describe("Given I am connected as an employee", () => {
         console.log(message);
         expect(message).toBeTruthy()
       })
-  
+
       test("fetches messages from an API and fails with 500 message error", async () => {
-  
+
         mockStore.bills.mockImplementationOnce(() => {
           return {
             list : () =>  {
               return Promise.reject(new Error("Erreur 500"))
             }
           }})
-  
+
         window.onNavigate(ROUTES_PATH.Bills)
         await new Promise(process.nextTick);
         const message = await screen.getByText(/Erreur 500/)
         expect(message).toBeTruthy()
       })
     })
-  
+
     })
     // end //
 
