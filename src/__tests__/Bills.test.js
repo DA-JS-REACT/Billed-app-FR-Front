@@ -70,7 +70,7 @@ describe("Given I am connected as an employee", () => {
         expect(buttonNewBill).toHaveAttribute('type', 'button')
 
       })
-      test("Then , employee click on button add new Bill", async () => {
+      test("Then , employee click on button add new Bill",  () => {
         const onNavigate = (pathname) => {
           document.body.innerHTML = ROUTES({ pathname })
         }

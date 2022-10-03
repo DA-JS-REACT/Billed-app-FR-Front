@@ -31,17 +31,6 @@ describe("Given I am connected as an employee", () => {
   })
 
   describe("When I upload  file in the input field " , () => {
-    test("the file has  correctely extension ", () => {
-      const html = NewBillUI()
-      document.body.innerHTML = html
-      const fileName = 'hello.png'
-      const file = new File(['hello'], fileName, { type: 'image/png', lastModified: new Date(Date.now()),size :12 })
-      const test  =  formatFile(file)
-      expect(fileName).toStrictEqual(test)
-      const fieldUpload = screen.getByTestId('upload-file')
-      expect(fieldUpload).not.toContainHTML('<small data-testid="file-error"</small>')
-
-    })
     test("the file has not correctely extension ", () => {
       const html = NewBillUI()
       document.body.innerHTML = html
@@ -75,6 +64,8 @@ describe("Given I am connected as an employee", () => {
       const file = new File(['hello'], fileName, { type: 'image/png', lastModified: new Date(Date.now()),size :12 })
       inputFile.addEventListener('change',handleChangeFile)
       userEvent.upload(inputFile , file)
+      const fieldUpload = screen.getByTestId('upload-file')
+      expect(fieldUpload).not.toContainHTML('<small data-testid="file-error"</small>')
       expect(handleChangeFile).toHaveBeenCalled()
       expect(inputFile.files[0]).toStrictEqual(file)
       expect(inputFile.files).toHaveLength(1)
